@@ -12,3 +12,9 @@ class LeafNode(HTMLNode):
         if self.props is None:
             return f"<{self.tag}>{self.value}</{self.tag}>" 
         return f"<{self.tag} {super().props_to_html()}>{self.value}</{self.tag}>"
+    
+    def __eq__(self, leafnode):
+        return self.tag == leafnode.tag and self.value == leafnode.value and self.props == leafnode.props
+    
+    def __repr__(self):
+        return f"LeafNode({self.tag}, {self.value}, {self.props})"
