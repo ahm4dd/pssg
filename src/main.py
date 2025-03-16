@@ -2,6 +2,7 @@ from textnode import *
 from htmlnode import *
 from leafnode import *
 from parentnode import *
+from parser import *
 
 def main():
     #testNode = TextNode("This is some anchor text", TextType.LINK)
@@ -24,6 +25,12 @@ def main():
         LeafNode(None, "Normal text"),
     ],
     )
-    print(node.to_html())
+    #print(node.to_html())
+     
+    #text = "Weird **text** to test"
+    #text_splitted = text.split('**')
+    #print(text_splitted)
+    nodes = split_nodes_delimiter([TextNode("Hello _test_ world", TextType.TEXT), TextNode("Hello test _world_", TextType.TEXT)], "_", TextType.ITALIC)
 
+    print(nodes)
 main()
