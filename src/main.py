@@ -30,7 +30,12 @@ def main():
     #text = "Weird **text** to test"
     #text_splitted = text.split('**')
     #print(text_splitted)
-    nodes = split_nodes_delimiter([TextNode("Hello _test_ world", TextType.TEXT), TextNode("Hello test _world_", TextType.TEXT)], "_", TextType.ITALIC)
+    #nodes = split_nodes_delimiter([TextNode("Hello _test_ world", TextType.TEXT), TextNode("Hello test _world_", TextType.TEXT)], "_", TextType.ITALIC)
 
-    print(nodes)
+    #print(nodes)
+    #text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
+    #print(extract_markdown_images(text))
+
+    #text = "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)"
+    #print(extract_markdown_links(text))
 main()
