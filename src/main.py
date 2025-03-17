@@ -16,15 +16,15 @@ def main():
 
     #testLeafNode2 = LeafNode("a", "Click me!", {"href": "https://www.google.com"}) 
     #print(testLeafNode2.to_html())
-    node = ParentNode(
-    "p",
-    [
-        LeafNode("b", "Bold text"),
-        LeafNode(None, "Normal text"),
-        LeafNode("i", "italic text"),
-        LeafNode(None, "Normal text"),
-    ],
-    )
+    #node = ParentNode(
+    #"p",
+    #[
+      #  LeafNode("b", "Bold text"),
+      #  LeafNode(None, "Normal text"),
+      #  LeafNode("i", "italic text"),
+       # LeafNode(None, "Normal text"),
+    #],
+    #)
     #print(node.to_html())
      
     #text = "Weird **text** to test"
@@ -38,4 +38,18 @@ def main():
 
     #text = "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)"
     #print(extract_markdown_links(text))
+
+    #node = TextNode(
+    #    "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png) and another ![second image](https://i.imgur.com/3elNhQu.png)",
+    #    TextType.TEXT,
+    #)
+    #new_nodes = split_nodes_image([node])
+    #print(new_nodes)
+
+    node = TextNode(
+    "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)",
+    TextType.TEXT,
+    )
+    new_nodes = split_nodes_link([node])
+    print(new_nodes)
 main()
