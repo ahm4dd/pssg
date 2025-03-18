@@ -5,10 +5,12 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
     result = []
     for text_node in old_nodes:
         if text_node.text_type != TextType.TEXT:
-            result.extend(text_node)
-        if delimiter not in text_node.text:
-            raise ValueError(f"The delimiter {delimiter} was not found in the following text: {text_node.text}")
-        
+            result.append(text_node)
+            continue
+        elif delimiter not in text_node.text:
+            result.append(text_node)
+            continue
+
         temp_result = []
         text_splitted = text_node.text.split(delimiter)
         temp_result.append(TextNode(text_splitted[0], TextType.TEXT))

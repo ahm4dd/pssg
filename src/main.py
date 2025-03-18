@@ -3,6 +3,7 @@ from htmlnode import *
 from leafnode import *
 from parentnode import *
 from parser import *
+from converter import *
 
 def main():
     #testNode = TextNode("This is some anchor text", TextType.LINK)
@@ -46,10 +47,24 @@ def main():
     #new_nodes = split_nodes_image([node])
     #print(new_nodes)
 
-    node = TextNode(
-    "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)",
-    TextType.TEXT,
-    )
-    new_nodes = split_nodes_link([node])
-    print(new_nodes)
+    #node = TextNode(
+    #"This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)",
+    #TextType.TEXT,
+    #)
+    #new_nodes = split_nodes_link([node])
+    #print(new_nodes)
+    
+    print(text_to_textnodes("This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"))
+    #[
+    #TextNode("This is ", TextType.TEXT),
+    #TextNode("text", TextType.BOLD),
+    #TextNode(" with an ", TextType.TEXT),
+    #TextNode("italic", TextType.ITALIC),
+    #TextNode(" word and a ", TextType.TEXT),
+    #TextNode("code block", TextType.CODE),
+    #TextNode(" and an ", TextType.TEXT),
+    #TextNode("obi wan image", TextType.IMAGE, "https://i.imgur.com/fJRm4Vk.jpeg"),
+    #TextNode(" and a ", TextType.TEXT),
+    #TextNode("link", TextType.LINK, "https://boot.dev"),
+    #]
 main()

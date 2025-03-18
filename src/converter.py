@@ -1,6 +1,7 @@
 from htmlnode import *
 from textnode import *
 from leafnode import *
+from parser import *
 
 def text_node_to_html_node(text_node):
        match text_node.text_type:
@@ -18,3 +19,16 @@ def text_node_to_html_node(text_node):
                  return LeafNode('img', value='', props={'src': text_node.url, 'alt': text_node.text})
             case _:
                  raise Exception("TextNode type doesn't exist")
+
+def text_to_textnodes(text): 
+     result = []
+     text_nodes = [TextNode(text, TextType.TEXT)]
+     try:
+          text_nodes = split_nodes_image(text_nodes)
+          text_nodes = split_nodes_link(text_nodes)
+          text_nodes = split_nodes_delimiter(text_nodes, "**", TextType.BOLD)
+          text_nodes = split_nodes_delimiter(text_nodes, "_", TextType.ITALIC)
+          text_nodes = split_nodes_delimiter(text_nodes, "`", TextType.CODE)
+     except Exception:
+          pass
+     return text_nodes
