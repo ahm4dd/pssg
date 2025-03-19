@@ -32,3 +32,17 @@ def text_to_textnodes(text):
      except Exception:
           pass
      return text_nodes
+
+def markdown_to_blocks(markdown):
+    result_blocks = []
+    temp_blocks = []
+    blocks = markdown.split("\n\n")
+    
+    for block in blocks:
+        if block.strip() == "":
+            continue
+        temp_blocks.extend(block.strip().split('    \n    '))
+    for block in temp_blocks:
+        result_blocks.append(block.strip('\n    ').replace('    ', ''))
+    
+    return result_blocks

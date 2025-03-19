@@ -54,7 +54,7 @@ def main():
     #new_nodes = split_nodes_link([node])
     #print(new_nodes)
     
-    print(text_to_textnodes("This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"))
+    #print(text_to_textnodes("This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"))
     #[
     #TextNode("This is ", TextType.TEXT),
     #TextNode("text", TextType.BOLD),
@@ -67,4 +67,13 @@ def main():
     #TextNode(" and a ", TextType.TEXT),
     #TextNode("link", TextType.LINK, "https://boot.dev"),
     #]
+    print(markdown_to_blocks("""
+    This is **bolded** paragraph
+    
+    This is another paragraph with _italic_ text and `code` here
+    This is the same paragraph on a new line
+    
+    - This is a list
+    - with items
+    """))
 main()
