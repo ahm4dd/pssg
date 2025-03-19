@@ -76,5 +76,5 @@ def main():
     #- This is a list
     #- with items
     #"""))
-    print(block_to_block_type('- hello'))
+    print(block_to_block_type('1. hello \n2. hello\n3. hello'))
 main()

@@ -61,7 +61,6 @@ def markdown_to_blocks(markdown):
 
 
 def block_to_block_type(markdown_block):
-
      if re.match(r'^#{1,6} ', markdown_block) is not None:
           return BlockType.HEADING 
      elif markdown_block.startswith('```') and markdown_block.endswith('```'):
@@ -70,10 +69,15 @@ def block_to_block_type(markdown_block):
           return BlockType.QUOTE
      elif markdown_block.startswith('- '):
           return BlockType.UNORDERED_LIST
-     #TODO
-     # Every line in an ordered list block must start with a number followed by a . character and a space. The number must start at 1 and increment by 1 for each line.
-     # If none of the above conditions are met, the block is a normal paragraph.
-     """
-     elif re.match(r'^[1-9]. ', markdown_block) is not None:
+     elif re.findall(r'\d+. ', markdown_block) != []:
+          max_number = float('-inf')
+          for number in re.findall(r'\d+. ', markdown_block):
+               if int(number.replace('. ','')) > max_number:
+                    max_number = int(number.replace('. ',''))  
+
+          for number in range(1, max_number):
+               if number != int(re.findall(r'\d+. ', markdown_block)[number-1].replace('. ', '')):
+                    raise ValueError('Line numbers are not in order.')
           return BlockType.ORDERED_LSIT
-     """
+     else:
+          return BlockType.PARAGRAPH
