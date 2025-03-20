@@ -106,3 +106,23 @@ class TestConverter(unittest.TestCase):
                 "- This is a list\n- with items",
             ],
         )
+    
+    def test_block_to_block_type(self):
+        markdown_block = "# This is a heading"
+        self.assertEqual(block_to_block_type(markdown_block), BlockType.HEADING)
+        markdown_block = "This is a paragraph"
+        self.assertEqual(block_to_block_type(markdown_block), BlockType.PARAGRAPH)
+        markdown_block = "```This is a code block```"
+        self.assertEqual(block_to_block_type(markdown_block), BlockType.CODING)
+        markdown_block = "> This is a quote"
+        self.assertEqual(block_to_block_type(markdown_block), BlockType.QUOTE)
+        markdown_block = "- This is an unordered list"
+        self.assertEqual(block_to_block_type(markdown_block), BlockType.UNORDERED_LIST)
+        markdown_block = "1. This is an ordered list"
+        self.assertEqual(block_to_block_type(markdown_block), BlockType.ORDERED_LSIT)
+        markdown_block = "1. This is an ordered list\n2. This is another ordered list"
+        self.assertEqual(block_to_block_type(markdown_block), BlockType.ORDERED_LSIT)
+
+        markdown_block = "1. This is an ordered list\n3. This is another ordered list"
+        with self.assertRaises(ValueError):
+            block_to_block_type(markdown_block)
