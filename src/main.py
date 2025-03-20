@@ -7,7 +7,7 @@ from parentnode import *
 from parser import *
 from converter import *
 
-IMAGES_EXTENSIONS = ['png', 'jpg', 'svg', 'webg']
+IMAGES_EXTENSIONS = ['png', 'jpg', 'jpeg', 'svg']
 
 def main():
     copy_to_public()
