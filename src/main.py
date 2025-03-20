@@ -76,5 +76,9 @@ def main():
     #- This is a list
     #- with items
     #"""))
-    print(block_to_block_type('1. hello \n2. hello\n3. hello'))
+    #print(block_to_block_type('1. hello \n2. hello\n3. hello'))
+    md = """
+        This is a ![image](https://boot.dev)
+        """
+    print(markdown_to_html_node(md).to_html())
 main()

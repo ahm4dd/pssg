@@ -126,3 +126,77 @@ class TestConverter(unittest.TestCase):
         markdown_block = "1. This is an ordered list\n3. This is another ordered list"
         with self.assertRaises(ValueError):
             block_to_block_type(markdown_block)
+    
+    def test_paragraphs(self):
+        md = """
+        This is **bolded** paragraph
+        text in a p
+        tag here
+
+        This is another paragraph with _italic_ text and `code` here
+
+        """
+
+        html = markdown_to_html_node(md)
+        self.assertEqual(
+            html.to_html(),
+            "<div><p>This is <b>bolded</b> paragraph text in a p tag here</p><p>This is another paragraph with <i>italic</i> text and <code>code</code> here</p></div>",
+        )
+
+    def test_codeblock(self):
+        md = """
+        ```
+        This is text that _should_ remain
+        the **same** even with inline stuff
+        ```
+        """
+
+        html = markdown_to_html_node(md)
+        self.assertEqual(
+            html.to_html(),
+            "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
+        )
+    
+    def test_unordered_list(self):
+        md = """
+        - This is a list
+        - with items
+        """
+
+        html = markdown_to_html_node(md)
+        self.assertEqual(
+            html.to_html(),
+            "<div><ul><li>This is a list</li><li>with items</li></ul></div>",
+        )
+    def test_ordered_list(self):
+        md = """
+        1. This is a list
+        2. with items
+        """
+
+        html = markdown_to_html_node(md)
+        self.assertEqual(
+            html.to_html(),
+            "<div><ol><li>This is a list</li><li>with items</li></ol></div>",
+        )
+
+    def test_link(self):
+        md = """
+        This is a [link](https://boot.dev)
+        """
+
+        html = markdown_to_html_node(md)
+        self.assertEqual(
+            html.to_html(),
+            "<div><p>This is a <a href=\"https://boot.dev\">link</a></p></div>",
+        )
+    def test_image(self):
+        md = """
+        This is a ![image](https://boot.dev)
+        """
+
+        html = markdown_to_html_node(md)
+        self.assertEqual(
+            html.to_html(),
+            "<div><p>This is a <img src=\"https://boot.dev\" alt=\"image\"></img></p></div>",
+        )

@@ -4,6 +4,7 @@ from textnode import *
 from leafnode import *
 from parser import *
 from enum import Enum
+from parentnode import *
 
 class BlockType(Enum):
      PARAGRAPH = 'paragraph'
@@ -81,3 +82,62 @@ def block_to_block_type(markdown_block):
           return BlockType.ORDERED_LSIT
      else:
           return BlockType.PARAGRAPH
+     
+ 
+def markdown_to_html_node(markdown):
+    blocks = markdown_to_blocks(markdown)
+    children = []
+    
+    for block in blocks:
+        block_type = block_to_block_type(block)
+        
+        if block_type == BlockType.PARAGRAPH:
+            flattened_text = re.sub(r'\s*\n\s*', ' ', block)
+            children.append(ParentNode("p", text_to_children(flattened_text)))
+        
+        elif block_type == BlockType.HEADING:
+            heading_match = re.match(r'^(#{1,6}) (.+)$', block)
+            if heading_match:
+                level = len(heading_match.group(1))
+                content = heading_match.group(2)
+                children.append(ParentNode(f"h{level}", text_to_children(content)))
+        
+        elif block_type == BlockType.CODING:
+            code_content = block[3:-3]
+            if code_content.startswith('\n'):
+                code_content = code_content[1:]
+          
+            text_node = TextNode(code_content, TextType.TEXT)
+            code_html_node = text_node_to_html_node(text_node)
+            children.append(ParentNode("pre", [ParentNode("code", [code_html_node])]))
+        
+        elif block_type == BlockType.QUOTE:
+            quote_content = re.sub(r'^>\s?', '', block, flags=re.MULTILINE)
+            quote_content = re.sub(r'\s*\n\s*', ' ', quote_content)
+            children.append(ParentNode("blockquote", text_to_children(quote_content)))
+        
+        elif block_type == BlockType.UNORDERED_LIST:
+            list_items = []
+            for item in block.split("- ")[1:]:
+                if item.strip():
+                    flattened_item = re.sub(r'\s*\n\s*', ' ', item.strip())
+                    list_items.append(ParentNode("li", text_to_children(flattened_item)))
+            children.append(ParentNode("ul", list_items))
+        
+        elif block_type == BlockType.ORDERED_LSIT:
+            list_items = []
+            items = re.split(r'\d+\.\s+', block)[1:]
+            for item in items:
+                if item.strip():
+                    flattened_item = re.sub(r'\s*\n\s*', ' ', item.strip())
+                    list_items.append(ParentNode("li", text_to_children(flattened_item)))
+            children.append(ParentNode("ol", list_items))
+    
+    return ParentNode("div", children)
+ 
+def text_to_children(text):
+     html_nodes = []
+     text_nodes = text_to_textnodes(text)
+     for node in text_nodes:
+          html_nodes.append(text_node_to_html_node(node))
+     return html_nodes
