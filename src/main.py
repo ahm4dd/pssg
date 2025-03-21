@@ -11,6 +11,8 @@ IMAGES_EXTENSIONS = ['png', 'jpg', 'jpeg', 'svg']
 
 def main():
     copy_to_public()
+    generate_page('content/index.md','template.html','public/index.html')
+    
 
 def copy_to_public(path='static/'):
     files = os.listdir(path)
@@ -38,4 +40,28 @@ def copy_to_public(path='static/'):
                     shutil.copy(os.path.join(path, file), 'public/images')
                 else:
                     shutil.copy(os.path.join(path, file), 'public/')
+
+def generate_page(from_path, template_path, dest_path):
+    print(f'Generating page from {from_path} to {dest_path} using {template_path}')
+
+    try:
+        markdown = open(from_path, 'r').read()
+        template = open(template_path, 'r').read()
+
+        html_from_markdown = markdown_to_html_node(markdown).to_html()
+        page_title = extract_title(markdown)
+        template = template.replace('{{ Title }}', page_title)
+        template = template.replace('{{ Content }}', html_from_markdown)
+
+        if not(os.path.exists(os.path.dirname(dest_path))):
+            os.makedirs(os.path.dirname(dest_path))
+        if not(os.path.exists(dest_path)):
+            os
+
+        with open(dest_path, 'w') as f:
+            f.write(template)
+            f.close()
+    except Exception as e:
+        print(e)
+
 main()
