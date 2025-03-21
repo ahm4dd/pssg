@@ -36,6 +36,15 @@ def extract_markdown_images(text):
 def extract_markdown_links(text):
     return re.findall(r"\[(.*?)\]\((.*?)\)",text)
 
+def extract_title(markdown):
+    lines = markdown.split('\n')
+
+    for line in lines:
+        if re.search(r'^#{1}\s(.*?)+$', line.strip()) is not None:
+             return line.split('# ', 1)[1].strip()
+    
+    raise Exception('h1 not found')
+
 def split_nodes_image(old_nodes):
     result = []
 

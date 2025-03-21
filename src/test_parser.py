@@ -84,3 +84,16 @@ class TestParser(unittest.TestCase):
             ],
             new_nodes,
         )
+
+    def test_extract_title(self):
+        title = "# Hello"
+        self.assertEqual('Hello', extract_title(title))
+        
+        title = "# Hello \nWhats up"
+        self.assertEqual('Hello', extract_title(title))
+
+        title = "# Hello \n\nWhats up"
+        self.assertEqual('Hello', extract_title(title))
+        
+        title = 'htehto\n## Hello \n# this is the title \n#NOTITLE\n hello\n\n\n\n### HELLO THERE'
+        self.assertEqual('this is the title', extract_title(title))
