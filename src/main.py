@@ -11,7 +11,7 @@ IMAGES_EXTENSIONS = ['png', 'jpg', 'jpeg', 'svg']
 
 def main():
     copy_to_public()
-    generate_page('content/index.md','template.html','public/index.html')
+    generate_pages_recursive('content/','template.html','public/')
     
 
 def copy_to_public(path='static/'):
@@ -63,5 +63,24 @@ def generate_page(from_path, template_path, dest_path):
             f.close()
     except Exception as e:
         print(e)
-
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    entries = os.listdir(dir_path_content)
+    
+    for entry in entries:
+        entry_path = os.path.join(dir_path_content, entry)
+        
+        if os.path.isdir(entry_path):
+            new_dest_dir = os.path.join(dest_dir_path, entry)
+            if not os.path.exists(new_dest_dir):
+                os.makedirs(new_dest_dir)
+            
+            generate_pages_recursive(entry_path + '/', template_path, new_dest_dir + '/')
+        
+        elif entry.endswith('.md'):
+            if entry == 'index.md':
+                dest_file_path = os.path.join(dest_dir_path, 'index.html')
+            else:
+                dest_file_path = os.path.join(dest_dir_path, entry.replace('.md', '.html'))
+            
+            generate_page(entry_path, template_path, dest_file_path)
 main()
