@@ -1,1 +1,1 @@
-python3 src/main.py "https://github.com/ahm4dd/SSG"
+python3 src/main.py "ahm4dd/pssg/"
