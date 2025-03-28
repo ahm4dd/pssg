@@ -1,1 +1,1 @@
-python3 src/main.py "pssg/docs/"
+python3 src/main.py "/pssg/"
