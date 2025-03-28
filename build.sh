@@ -1,1 +1,1 @@
-python3 src/main.py "ahm4dd/pssg/"
+python3 src/main.py "pssg/docs/"
