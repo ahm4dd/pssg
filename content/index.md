@@ -43,4 +43,5 @@ func main(){
 
 Want to get in touch? [Contact me here](/contact).
 
-This site was generated with a custom-built [static site generator](https://www.boot.dev/courses/build-static-site-generator-python) from the course on [Boot.dev](https://www.boot.dev).
+This site was generated with a custom-built static site generator Built by [ahm4dd](https://github.com/ahm4dd/pssg/).
+<br>The content of this blog was taken from [Boot.dev](https://www.boot.dev).
